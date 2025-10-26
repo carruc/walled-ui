@@ -81,6 +81,19 @@ async function connectWebSocket() {
 async function handleBackendMessage(message) {
     if (!message.type) return;
 
+    if (message.type === 'guardrail_violation') {
+        updateStatus('stopped');
+        const note = (message.data && message.data.message) || 'Run stopped due to prompt injection.';
+        chrome.notifications.create({
+            type: 'basic',
+            iconUrl: 'icons/icon128.png',
+            title: 'Walled UI',
+            message: note,
+            priority: 2
+        });
+        return;
+    }
+
     // Handle status messages (including cancellation)
     if (message.type === 'status') {
         console.log('Received status message:', message);
