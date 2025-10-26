@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Walled UI Options</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.6/build/pure-min.css" integrity="sha384-Uu6IeWbM+gzNVXJcM9XV3SohHtmWE+3VGi496jvgX1jyvDTWgeajpoUo1A9+yWye" crossorigin="anonymous">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+
+  <div class="container">
+    <h1>Settings</h1>
+
+    <div class="tabs">
+      <button class="tab-link active" data-tab="profile">My Profile</button>
+      <button class="tab-link" data-tab="guardrails">Guardrails</button>
+      <button class="tab-link" data-tab="apis">APIs</button>
+      <button class="tab-link" data-tab="notifications">Notifications</button>
+    </div>
+
+    <div id="profile" class="tab-content active">
+      <h2>My Profile</h2>
+      <p>Mock settings for your profile.</p>
+      <form class="pure-form pure-form-aligned">
+        <fieldset>
+          <div class="pure-control-group">
+            <label for="name">Name</label>
+            <input id="name" type="text" placeholder="Username">
+          </div>
+          <div class="pure-control-group">
+            <label for="email">Email Address</label>
+            <input id="email" type="email" placeholder="Email Address">
+          </div>
+        </fieldset>
+      </form>
+    </div>
+
+    <div id="guardrails" class="tab-content">
+      <h2>Guardrails</h2>
+      <p>Mock settings for guardrails.</p>
+       <form class="pure-form">
+        <fieldset>
+            <label for="guardrail-setting-1">Guardrail Setting 1</label>
+            <input id="guardrail-setting-1" type="text" placeholder="Some value">
+             <label for="guardrail-setting-2" class="pure-checkbox">
+                <input id="guardrail-setting-2" type="checkbox"> A checkbox
+            </label>
+        </fieldset>
+       </form>
+    </div>
+
+    <div id="apis" class="tab-content">
+      <h2>APIs</h2>
+      <p>This is where you would manage your API keys.</p>
+       <div class="api-key-placeholder">
+        <svg class="api-key-icon" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2H3v16h5v4l4-4h5l4-4V2zm-5 9-4 4H7V4h10v7z"/></svg>
+        <h3>No API keys yet</h3>
+        <p>Create an API key and start building custom integrations.</p>
+        <button class="pure-button pure-button-primary">Create API key</button>
+      </div>
+    </div>
+
+    <div id="notifications" class="tab-content">
+      <h2>Notifications</h2>
+      <p>Mock settings for notifications.</p>
+        <form class="pure-form">
+        <fieldset>
+            <legend>Notification Preferences</legend>
+            <label for="option-one" class="pure-checkbox">
+                <input id="option-one" type="checkbox" value="">
+                Email me when something happens.
+            </label>
+            <label for="option-two" class="pure-checkbox">
+                <input id="option-two" type="checkbox" value="">
+                Push notifications for important updates.
+            </label>
+        </fieldset>
+    </form>
+    </div>
+  </div>
+
+  <script src="options.js"></script>
+</body>
+</html>

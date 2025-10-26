@@ -1,0 +1,81 @@
+---
+alwaysApply: true
+---
+
+# Cursor Rules for Creating a Chromium Manifest V3 Extension
+
+**These precision rules are designed for a cursor instance tasked with building a chromium extension using Manifest V3, maximizing cross-browser compatibility and security.**
+
+***
+
+## 1. Scope and Project Definition
+
+- Only use Manifest V3 API and capabilities; do not rely on deprecated features (e.g., background pages—use service workers).
+- Target compatibility with all mainstream Chromium browsers (latest stable versions of Chrome, Edge, Brave, Vivaldi, Opera).
+- Do not use browser-specific APIs unless strictly necessary; prefer standard `chrome.*` APIs over `browser.*` unless exception handling is included.
+
+## 2. File and Directory Structure
+
+- Create a root-level folder for the extension project.
+- All assets (icons, content scripts, background/service worker, popup, options) must reside within this folder.
+- The root must include a precise, syntactically valid `manifest.json` with `"manifest_version": 3`.
+
+## 3. Manifest Construction
+
+- Define these minimum fields: `name`, `description`, `version`, `manifest_version`.
+- Only request essential permissions (`permissions`, `host_permissions`, `optional_permissions`).
+- If access to pages is required, use explicit host patterns and limit match patterns as much as possible.
+- Include references to all scripts, pages, and icons used by the extension.
+- Use `"action"` for the popup, not deprecated `"browser_action"` or `"page_action"`.
+- Add `"background"` with `"service_worker"` only.
+
+## 4. Script and Resource Referencing
+
+- All referenced files in the manifest (`js`, `css`, `html`, `icons`) must exist in the directory. No URLs to remote or CDN assets.
+- No `eval` or dynamic code execution; all JavaScript must be static and locally stored.
+- Ensure all resource file names are consistent and referenced properly, including casing.
+
+## 5. Security and Privacy
+
+- Never request `"unsafe-eval"`, `"webRequestBlocking"` (unless functionally required and justified).
+- Never use remote scripts or resources—always inline or bundle.
+- Comply strictly with CSP (Content Security Policy) requirements in all HTML files.
+- Never request more permissions than necessary; avoid `"all_urls"` unless essential.
+- When using storage (`chrome.storage`), prefer `storage.local` unless `sync` is necessary.
+
+## 6. Prompt Engineering Best Practices
+
+- When inserting code or files, output only the syntactically valid code or file content. Do not include explanations or extraneous text.
+- For each generated script or file, name, describe its function, and provide the content in a markdown code block with appropriate language commenting.
+- Explicitly state limitations, browser compatibility caveats, and any external requirements within comments in the `README.md`.
+- All human-facing documentation should be in English and included in a `README.md` at the project root.
+
+## 7. Testing and Compatibility
+
+- Output extensive browser compatibility notes in the documentation; test on at least Chrome, Edge, and Brave.
+- Warn explicitly if using APIs that are not universally supported across Chromium-based browsers.
+- Provide explicit install instructions for both development and user installation (via Chrome Web Store and manual loading).
+
+## 8. Maintenance and Updates
+
+- All version increments must follow semantic versioning.
+- Document all updates and known issues in a `CHANGELOG.md`.
+- Ensure all obsolete files and permissions are removed in new updates.
+
+***
+
+**Markdown Syntax Example**:
+
+```markdown
+## my-extension/
+- manifest.json
+- service-worker.js
+- popup.html
+- popup.js
+- icons/
+    - icon16.png
+    - icon48.png
+    - icon128.png
+- README.md
+- CHANGELOG.md
+```

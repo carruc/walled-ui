@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Walled UI</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      width: 300px;
+      padding: 10px;
+    }
+    textarea {
+      width: 100%;
+      box-sizing: border-box;
+      height: 100px;
+      margin-bottom: 10px;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    #status {
+      margin-top: 10px;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <h1>Walled UI</h1>
+  <textarea id="query" placeholder="Enter your request..."></textarea>
+  <button id="submit">Start Agent</button>
+  <div id="status">Status: Idle</div>
+</body>
+<script src="popup.js"></script>
+</html>
