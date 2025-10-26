@@ -2,40 +2,19 @@
 <html>
 <head>
   <title>Walled UI</title>
-  <style>
-    body {
-      font-family: sans-serif;
-      width: 300px;
-      padding: 10px;
-    }
-    textarea {
-      width: 100%;
-      box-sizing: border-box;
-      height: 100px;
-      margin-bottom: 10px;
-    }
-    button {
-      width: 100%;
-      padding: 10px;
-      background-color: #4CAF50;
-      color: white;
-      border: none;
-      cursor: pointer;
-    }
-    button:hover {
-      background-color: #45a049;
-    }
-    #status {
-      margin-top: 10px;
-      font-style: italic;
-    }
-  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="popup.css">
 </head>
 <body>
-  <h1>Walled UI</h1>
+  <div class="header">
+      <h1>Walled UI</h1>
+  </div>
   <textarea id="query" placeholder="Enter your request..."></textarea>
-  <button id="submit">Start Agent</button>
-  <div id="status">Status: Idle</div>
+  <button id="submit" class="button">Start Agent</button>
+  <button id="stop" class="button button-stop hidden">Stop Agent</button>
+  <div id="status" class="status">Status: Idle</div>
 </body>
 <script src="popup.js"></script>
 </html>

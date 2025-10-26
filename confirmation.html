@@ -1,47 +1,49 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Confirmation Required</title>
-  <style>
-    body {
-      font-family: sans-serif;
-      padding: 15px;
-      text-align: center;
-    }
-    .details {
-      text-align: left;
-      margin-bottom: 20px;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      background-color: #f9f9f9;
-    }
-    button {
-      padding: 10px 20px;
-      margin: 0 10px;
-      cursor: pointer;
-      border-radius: 5px;
-      font-size: 14px;
-    }
-    #approve {
-      background-color: #4CAF50;
-      color: white;
-      border: none;
-    }
-    #deny {
-      background-color: #f44336;
-      color: white;
-      border: none;
-    }
-  </style>
+  <link rel="stylesheet" href="confirmation.css">
 </head>
 <body>
-  <h2 id="title">Confirmation Required</h2>
-  <div id="details" class="details">
-    Loading...
+  <div id="walled-ui-confirmation-container" class="walled-ui-confirmation-card">
+    <!-- Site Information -->
+    <div class="walled-ui-confirmation-site-info">
+      <img id="walled-ui-confirmation-site1-favicon" src="" alt="" class="walled-ui-confirmation-favicon">
+      <span id="walled-ui-confirmation-site1-name" class="walled-ui-confirmation-site-name"></span>
+      <span class="walled-ui-confirmation-via-text">via</span>
+      <img id="walled-ui-confirmation-site2-favicon" src="" alt="" class="walled-ui-confirmation-favicon">
+      <span id="walled-ui-confirmation-site2-name" class="walled-ui-confirmation-site-name"></span>
+    </div>
+    
+    <!-- Content Section -->
+    <div class="walled-ui-confirmation-content">
+      <a id="walled-ui-confirmation-title-link" href="#" target="_blank" rel="noopener noreferrer" class="walled-ui-confirmation-question-link">
+        <span id="walled-ui-confirmation-title" class="walled-ui-confirmation-question-text">Confirm Payment?</span>
+        <svg class="walled-ui-confirmation-external-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+          <polyline points="15 3 21 3 21 9"></polyline>
+          <line x1="10" y1="14" x2="21" y2="3"></line>
+        </svg>
+      </a>
+      
+      <div class="walled-ui-confirmation-amount-container">
+        <p id="walled-ui-confirmation-amount" class="walled-ui-confirmation-total-amount">$0.00</p>
+      </div>
+    </div>
+    
+    <!-- Action Buttons -->
+    <div class="walled-ui-confirmation-actions">
+      <div class="walled-ui-confirmation-primary-actions">
+        <button id="walled-ui-confirmation-approve" class="walled-ui-confirmation-btn walled-ui-confirmation-btn-primary">Buy</button>
+        <button id="walled-ui-confirmation-deny" class="walled-ui-confirmation-btn walled-ui-confirmation-btn-secondary">Skip</button>
+      </div>
+      
+      <button id="walled-ui-confirmation-block" class="walled-ui-confirmation-btn walled-ui-confirmation-btn-destructive">Block</button>
+    </div>
   </div>
-  <button id="approve">Approve</button>
-  <button id="deny">Deny</button>
+  
+  <script src="confirmation.js"></script>
 </body>
-<script src="confirmation.js"></script>
 </html>

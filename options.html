@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Walled UI Options</title>
+  <title>walled Settings</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.6/build/pure-min.css" integrity="sha384-Uu6IeWbM+gzNVXJcM9XV3SohHtmWE+3VGi496jvgX1jyvDTWgeajpoUo1A9+yWye" crossorigin="anonymous">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -13,73 +12,117 @@
 <body>
 
   <div class="container">
-    <h1>Settings</h1>
+    <header class="header">
+      <h1>walled Settings</h1>
+      <p class="subtitle">Manage your account settings and preferences.</p>
+    </header>
 
     <div class="tabs">
-      <button class="tab-link active" data-tab="profile">My Profile</button>
-      <button class="tab-link" data-tab="guardrails">Guardrails</button>
-      <button class="tab-link" data-tab="apis">APIs</button>
-      <button class="tab-link" data-tab="notifications">Notifications</button>
+      <button class="tab-link active" data-tab="profile">
+        <span>Profile</span>
+      </button>
+      <button class="tab-link" data-tab="guardrails">
+        <span>Guardrails</span>
+      </button>
+      <button class="tab-link" data-tab="apis">
+        <span>APIs</span>
+      </button>
+      <button class="tab-link" data-tab="notifications">
+        <span>Notifications</span>
+      </button>
     </div>
 
-    <div id="profile" class="tab-content active">
-      <h2>My Profile</h2>
-      <p>Mock settings for your profile.</p>
-      <form class="pure-form pure-form-aligned">
-        <fieldset>
-          <div class="pure-control-group">
+    <div class="content-wrapper">
+      <div id="profile" class="tab-content active">
+        <form class="form">
+          <div class="form-group">
             <label for="name">Name</label>
-            <input id="name" type="text" placeholder="Username">
+            <input id="name" type="text" placeholder="Enter your name">
           </div>
-          <div class="pure-control-group">
-            <label for="email">Email Address</label>
-            <input id="email" type="email" placeholder="Email Address">
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input id="email" type="email" placeholder="Enter your email">
           </div>
-        </fieldset>
-      </form>
-    </div>
-
-    <div id="guardrails" class="tab-content">
-      <h2>Guardrails</h2>
-      <p>Mock settings for guardrails.</p>
-       <form class="pure-form">
-        <fieldset>
-            <label for="guardrail-setting-1">Guardrail Setting 1</label>
-            <input id="guardrail-setting-1" type="text" placeholder="Some value">
-             <label for="guardrail-setting-2" class="pure-checkbox">
-                <input id="guardrail-setting-2" type="checkbox"> A checkbox
-            </label>
-        </fieldset>
-       </form>
-    </div>
-
-    <div id="apis" class="tab-content">
-      <h2>APIs</h2>
-      <p>This is where you would manage your API keys.</p>
-       <div class="api-key-placeholder">
-        <svg class="api-key-icon" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2H3v16h5v4l4-4h5l4-4V2zm-5 9-4 4H7V4h10v7z"/></svg>
-        <h3>No API keys yet</h3>
-        <p>Create an API key and start building custom integrations.</p>
-        <button class="pure-button pure-button-primary">Create API key</button>
+          <div class="form-actions">
+            <button type="button" class="button button-secondary">Cancel</button>
+            <button type="submit" class="button button-primary">Save changes</button>
+          </div>
+        </form>
       </div>
-    </div>
 
-    <div id="notifications" class="tab-content">
-      <h2>Notifications</h2>
-      <p>Mock settings for notifications.</p>
-        <form class="pure-form">
-        <fieldset>
-            <legend>Notification Preferences</legend>
-            <label for="option-one" class="pure-checkbox">
-                <input id="option-one" type="checkbox" value="">
-                Email me when something happens.
+      <div id="guardrails" class="tab-content">
+        <div class="section-header">
+          <h2>Guardrails</h2>
+          <p class="description">Configure safety and moderation settings.</p>
+        </div>
+        <form class="form">
+          <div class="form-group">
+            <label for="guardrail-setting-1">Content Filter Level</label>
+            <input id="guardrail-setting-1" type="text" placeholder="e.g., Medium">
+          </div>
+          <div class="checkbox-group">
+            <label class="checkbox-label">
+              <input id="guardrail-setting-2" type="checkbox">
+              <span class="checkbox-text">Enable advanced filtering</span>
             </label>
-            <label for="option-two" class="pure-checkbox">
-                <input id="option-two" type="checkbox" value="">
-                Push notifications for important updates.
-            </label>
-        </fieldset>
-    </form>
+          </div>
+          <div class="form-actions">
+            <button type="button" class="button button-secondary">Cancel</button>
+            <button type="submit" class="button button-primary">Save changes</button>
+          </div>
+        </form>
+      </div>
+
+      <div id="apis" class="tab-content">
+        <div class="section-header">
+          <h2>API Keys</h2>
+          <p class="description">Manage your API keys for integrations.</p>
+        </div>
+        <div class="empty-state">
+          <div class="empty-icon">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path>
+            </svg>
+          </div>
+          <h3 class="empty-title">No API keys</h3>
+          <p class="empty-description">Get started by creating your first API key.</p>
+          <button class="button button-primary">Create API key</button>
+        </div>
+      </div>
+
+      <div id="notifications" class="tab-content">
+        <div class="section-header">
+          <h2>Notifications</h2>
+          <p class="description">Choose what notifications you'd like to receive.</p>
+        </div>
+        <form class="form">
+          <div class="notification-section">
+            <h3 class="notification-title">Email Notifications</h3>
+            <div class="checkbox-group">
+              <label class="checkbox-label">
+                <input id="option-one" type="checkbox">
+                <div>
+                  <span class="checkbox-text">Activity notifications</span>
+                  <span class="checkbox-description">Get notified when something happens</span>
+                </div>
+              </label>
+            </div>
+            <div class="checkbox-group">
+              <label class="checkbox-label">
+                <input id="option-two" type="checkbox">
+                <div>
+                  <span class="checkbox-text">Important updates</span>
+                  <span class="checkbox-description">Push notifications for critical events</span>
+                </div>
+              </label>
+            </div>
+          </div>
+          <div class="form-actions">
+            <button type="button" class="button button-secondary">Cancel</button>
+            <button type="submit" class="button button-primary">Save changes</button>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 

@@ -5,10 +5,12 @@
   "description": "A Chromium extension to interact with an agentic framework.",
   "permissions": [
     "storage",
-    "alarms"
+    "alarms",
+    "scripting",
+    "notifications"
   ],
   "host_permissions": [
-    "http://127.0.0.1:8000/*"
+    "<all_urls>"
   ],
   "action": {
     "default_popup": "popup.html",
@@ -26,5 +28,11 @@
     "16": "icons/icon16.png",
     "48": "icons/icon48.png",
     "128": "icons/icon128.png"
-  }
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["confirmation.html"],
+      "matches": ["<all_urls>"]
+    }
+  ]
 }

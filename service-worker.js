@@ -81,14 +81,39 @@ async function connectWebSocket() {
 async function handleBackendMessage(message) {
     if (!message.type) return;
 
+    // Handle status messages (including cancellation)
+    if (message.type === 'status') {
+        console.log('Received status message:', message);
+        if (message.data && message.data.message) {
+            const statusMessage = message.data.message;
+            // Check if this is a cancellation message
+            if (statusMessage.includes('cancelled') || statusMessage.includes('stopped')) {
+                updateStatus('stopped');
+                // Show browser notification
+                chrome.notifications.create({
+                    type: 'basic',
+                    iconUrl: 'icons/icon128.png',
+                    title: 'Walled UI',
+                    message: 'Agent execution was cancelled.',
+                    priority: 1
+                });
+            } else if (statusMessage.includes('not approved') || statusMessage.includes('Halting')) {
+                updateStatus('idle');
+            }
+        }
+        return;
+    }
+
+    // Handle confirmation requests
     updateStatus(`awaiting_approval`);
 
-    chrome.windows.create({
-        url: 'confirmation.html',
-        type: 'popup',
-        width: 400,
-        height: 350,
-    });
+    const tabs = await chrome.tabs.query({ active: true, currentWindow: true });
+    if (tabs.length > 0) {
+        chrome.scripting.executeScript({
+            target: { tabId: tabs[0].id },
+            files: ['content-script.js']
+        });
+    }
     
     // Store message to be retrieved by the confirmation page
     chrome.storage.local.set({ confirmationData: message });
@@ -120,10 +145,44 @@ async function startAgent(query) {
         const data = await response.json();
         if (data.status !== 'ok') {
             console.error('Failed to start agent:', data.message);
-            updateStatus('error');
+            // Check if agent is already running - sync UI state with backend
+            if (data.message && data.message.includes('already running')) {
+                console.log('Agent already running, syncing UI state');
+                updateStatus('running');
+            } else {
+                updateStatus('error');
+            }
         }
     } catch (error) {
         console.error('Error starting agent:', error);
+        updateStatus('error');
+    }
+}
+
+async function stopAgent() {
+    const clientId = await getClientId();
+
+    try {
+        const response = await fetch(`http://${API_HOST}/api/v1/stop`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ client_id: clientId }),
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        if (data.status === 'ok') {
+            console.log('Agent stop requested successfully');
+            updateStatus('stopped');
+        } else {
+            console.error('Failed to stop agent:', data.message);
+            updateStatus('error');
+        }
+    } catch (error) {
+        console.error('Error stopping agent:', error);
         updateStatus('error');
     }
 }
@@ -134,6 +193,9 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
             case 'START_AGENT':
                 await startAgent(request.query);
                 break;
+            case 'STOP_AGENT':
+                await stopAgent();
+                break;
             case 'GET_STATUS':
                 sendResponse({ status: agentState });
                 break;
@@ -143,8 +205,9 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
                 }
                 const newStatus = request.decision === 'approved' ? 'running' : 'idle';
                 updateStatus(newStatus);
-                if (sender.tab && sender.tab.windowId) {
-                    chrome.windows.remove(sender.tab.windowId);
+                const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+                if (tab) {
+                    chrome.tabs.sendMessage(tab.id, { action: 'closeConfirmation' });
                 }
                 break;
         }
